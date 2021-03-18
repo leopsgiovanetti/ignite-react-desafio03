@@ -405,7 +405,7 @@ describe('useCart Hook', () => {
         () => {
           return result.current.cart;
         },
-        { timeout: 50 }
+        { timeout: 200 }
       );
       expect(result.current.cart).toEqual(
         expect.arrayContaining(initialStoragedData)

@@ -42,7 +42,7 @@ const Home = (): JSX.Element => {
         setProducts(response.data);
       });
     }
-    console.log(cart)
+
     loadProducts();
   }, []);
 
