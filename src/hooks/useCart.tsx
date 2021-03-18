@@ -19,13 +19,6 @@ interface CartContextData {
   updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
 }
 
-interface ProductResponse {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-}
-
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
@@ -42,10 +35,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
-  }, [cart])
+  //   localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart))
+  // }, [cart])
 
   useEffect(() => {
     api.get<Stock[]>('/stock').then(response => {
@@ -80,6 +73,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
               console.log("new:", newProduct)
               newProduct.amount = 1;
               setCart([...cart, newProduct])
+              localStorage.setItem(
+                '@RocketShoes:cart',
+                JSON.stringify([...cart, newProduct]))
             }
           }
 
@@ -102,6 +98,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       if (index !== -1) {
         newCart.splice(index, 1)
         setCart(newCart)
+        localStorage.setItem(
+          '@RocketShoes:cart',
+          JSON.stringify(newCart))
       }
       else {
         throw new Error('Erro na remoção do produto')
@@ -125,6 +124,9 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         if (targetProduct) {
           targetProduct.amount = amount;
           setCart(newCart)
+          localStorage.setItem(
+            '@RocketShoes:cart',
+            JSON.stringify(newCart))
         }
         else {
           throw new Error('Erro na alteração de quantidade do produto')
